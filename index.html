@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS to Bookmark</title>
+</head>
+<body>
+    <td><input id="cssInput" type="text" value="body{text-align:center;}"></td>
+    <td><button type="button" onclick="createBookmark()">create</button></td>
+    
+    <td><input id="cssOutput" type="text" readonly value=""></td>
+    
+    <script>
+        // TODO: use codeMirror and uglify css and js
+        
+        const source = `
+            function injectStylesheet(stylesheet) {
+                const injectedStyle = document.getElementById("injectedStyle");
+                const styleElement = injectedStyle ? injectedStyle : document.createElement("style");
+
+                styleElement.type = "text/css";
+                styleElement.textContent = stylesheet;
+
+                if (!injectedStyle) {
+                    styleElement.id = "injectedStyle";
+                    document.head.append(styleElement);
+                }
+            }
+
+            injectStylesheet(unescape(src));`;
+        
+        function createBookmark() {
+            var input = document.getElementById("cssInput");
+            var output = document.getElementById("cssOutput");
+            output.value = "javascript:" + "var src=\"" + escape(input.value) + "\";" + source;
+        }
+    </script>
+</body>
+</html>
